@@ -1,0 +1,79 @@
+<%-include("../partials/header")%>
+<div class="container">
+	
+<%if(!foundUser){%>
+	<h1>
+		Sorry! We were unable to found the user
+	</h1>
+<%}else{%>
+<div class="row">
+	<div class="col-md-4">
+		<h1>
+			<%=foundUser.username%>
+		</h1>
+		<p>
+			<%if(foundUser.firstName === "" && foundUser.lastName === "" ||foundUser.firstName === undefined && foundUser.lastName === undefined ){ %>
+			
+			Anonymous
+			
+			
+			
+			<%}else if(foundUser.firstName === "" || foundUser.lastName === ""){
+			
+				if(foundUser.firstName === "" ){%>
+
+					Mr or Miss <%=foundUser.lastName%>
+				<%}else{%>
+					<%=foundUser.firstName%>
+			
+				<%}%>
+			
+			<%}else{%>
+			
+			<%= foundUser.firstName + " " + foundUser.lastName%>
+			<%}%>
+		</p>
+		<%if(foundUser.isAdmin){%>
+			
+		<p><strong>Is Admin</strong></p>
+			
+		<%}%>
+		<img id="profilePic" alt="user profile image" 
+														   <%if(foundUser.avatar===""){%>
+														  src="https://cdn.pixabay.com/photo/2017/02/01/10/01/anonymous-2029318_960_720.png"
+			 												<%}else{%>
+														   <%=foundUser.avatar%><%}%> >
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id nulla sem. Quisque commodo, libero ac ornare tempor, odio nisl volutpat mauris, accumsan tincidunt nulla erat eget turpis. Sed euismod, elit bibendum interdum tristique, libero urna viverra lorem, vitae congue neque mauris et magna. Etiam nulla mauris, volutpat quis pellentesque et, tincidunt sed odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam scelerisque volutpat metus id scelerisque. Etiam rutrum velit mauris, eget malesuada lorem dapibus quis. Nunc et turpis ultrices, porta nulla quis, volutpat mi. Duis suscipit elit eu feugiat dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+		</p>
+	</div>	
+	<div class="col-md-8">
+		
+		<h2>
+			Hotels Posted
+		</h2>
+		<ul>
+			<%hotel.forEach(function(hotel){%>
+			
+			<li><a href="/hotels/<%=hotel._id%>"><%=hotel.name%></a></li>
+				
+			<%})%>
+	</ul>
+		
+	<h2>
+		Comments Posted
+		</h2>
+	 <%comment.forEach(function(comment){%>
+			<dl>	
+					<dt><a href="/hotels/<%=comment.hotelId%>"><%=comment.hotelName%></a></dt>
+					<dd><%=comment.text%></dd>
+			</dl>
+		
+	
+
+		<%})%>
+	</div>
+</div>
+	<%}%>
+</div>
+<%-include("../partials/footer")%>

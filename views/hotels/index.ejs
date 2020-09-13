@@ -1,0 +1,61 @@
+<%-include("../partials/header")%>
+
+<div class="container">
+
+<header class="jumbotron">
+	<div class="container">
+		<h1>
+			Welcome to <strong class="Hotel">Hotel<span class="Finder">Finder</span></strong>!
+		</h1>
+		<p>
+			View all hotels submitted by our users from all over the world
+		</p>
+		<p>
+			<a class="btn btn-primary btn-lg " href="/hotels/new">Add New Hotel</a>
+		</p>
+             <p>
+            	<form action="/hotels" method="GET" class="form-inline">
+            		<div class="form-group">
+            			<input type="text" name="search" placeholder="Hotel search..." class="form-control">
+            			<input type="submit" value="Search" class="btn btn-success">
+            		</div>
+            	</form>
+            </p>
+
+	</div>
+</header>
+
+	
+	<div class="row text-center" style="display:flex; flex-wrap:wrap;">
+		<div class="col-lg-12">
+			<h3>
+				<%if(noMatch === undefined){ %>
+				Our Most Popular Hotels!
+				<%}else{%>
+				<%= noMatch %>
+				<%}%>
+			</h3>
+			<%hotels.forEach(function(hotel){%>
+			<div class="col-md-3 col-sm-6">
+				<div class="thumbnail index">
+					<img  src="<%=hotel.image%>">
+					<div class="caption">
+						<h4><%=hotel.name%></h4>
+					</div>
+					<p>
+						<a href="/hotels/<%=hotel._id%>" class="btn btn-primary">
+							More Info
+						</a>
+					</p>
+
+				</div>
+			</div>
+			<%})%>
+		</div>
+	</div>
+
+	
+		
+</div>
+
+<%-include("../partials/footer")%>

@@ -1,0 +1,96 @@
+<%- include("../partials/map-header")%>
+
+
+<div class="container">
+	
+	<%if(!hotel){%>
+		<h1>
+			 Sorry! We were unable to find the hotel
+	</h1>
+	<%}else{%>
+	<div class="row">
+		<div class="col-md-3">
+			<p class="lead">
+				Information:
+			</p>	
+			<div class="list-group">
+				<li class="list-group-item">Random information about the Hotel</li>
+				<li class="list-group-item">More Random information about the Hotel</li>
+				<li class="list-group-item">Last details about the hotel</li>
+			</div>
+			<div id="m" style="height:400px"></div>
+			<p>
+				<%=hotel.place%>
+			</p>
+			
+		</div>
+		<div class="col-md-9">
+			<div class="thumbnail">
+				<img class="img-responsive" src="<%= hotel.image %>">
+				<div class="caption-full">
+					<h4 class="pull-right">From $ <%=hotel.price%> / night.</h4>
+					<h4><a><%=hotel.name%></a></h4>
+					<p><%= hotel.description %></p>
+					<p><em>Submitted by <a href="/user/<%=hotel.author.id%>"><%= hotel.author.username %></a></em></p>
+					
+					<% if(currentUser && hotel.author.id.equals(currentUser._id)|| currentUser && currentUser.isAdmin){%>
+						<a class="btn btn-warning" href="/hotels/<%=hotel._id%>/edit">Edit</a>
+						<form class="delete-form"  action="/hotels/<%=hotel._id%>?_method=DELETE" method="POST">
+							<button class="btn btn-danger">
+								Delete
+							</button>
+						</form>
+					<%}%>
+				</div>
+			</div>
+			<div class="well">
+				<div class="text-right">
+						<a  class="btn btn-success" href="/hotels/<%=hotel._id%>/comments/new">Add new comment</a>
+				</div>
+				<hr>
+				<% hotel.comments.forEach(function(comment){ %>
+				<div class="row">
+					<div class="col-md-12">
+						<strong><a href="/user/<%= comment.author.id%>"><%= comment.author.username %></a></strong>
+						<span class="pull-right">
+						10 days ago
+						</span>	
+						<p>
+						<%= comment.text %>
+						</p>
+					<% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){%>
+						<a href="/hotels/<%=hotel._id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-warning">Edit</a>
+						<form class="delete-form" action="/hotel/<%=hotel._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST" >
+							<button class="btn btn-xs btn-danger">
+								Delete
+							</button>
+						</form>
+					<%}%>
+					</div>
+				</div>
+
+				<% }) %>
+			</div>
+		</div>
+	</div>
+	
+	<%}%>
+</div>
+
+		<script>
+var center = SMap.Coords.fromWGS84<%=hotel.location%>;
+var m = new SMap(JAK.gel("m"), center, 13);
+m.addDefaultLayer(SMap.DEF_BASE).enable();
+m.addDefaultControls();
+
+var layer = new SMap.Layer.Marker();
+m.addLayer(layer);
+layer.enable();
+
+var options = {};
+var marker = new SMap.Marker(center, "myMarker", options);
+layer.addMarker(marker);
+	</script>
+
+	
+					<%-include("../partials/footer")%>

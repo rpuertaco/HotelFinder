@@ -1,0 +1,69 @@
+*{
+	font-family:roboto;
+}
+.thumbnail img{
+	width:100%;
+	
+}
+.thumbnail{
+	padding:0
+}
+
+.thumbnail .caption-full{
+	padding:9px;
+}
+
+.delete-form{
+	display:inline;
+}
+.index img{
+	
+	width:250px;
+	height:150px;
+
+}
+#profilePic{
+	width:150px;
+	height:200px;	
+}
+#profilePic + p {
+ text-align: justify;
+  text-justify: inter-word;
+}
+
+.cookie-container{
+	position: fixed;
+	bottom:-100%;
+	left:0;
+	right:0;
+	background:darkblue;
+	color:white;
+	transition:500ms;
+}
+.shown{
+	bottom:0;
+}
+
+.cookie-container a {
+	color:lightgreen;
+}
+.cookie-button{
+	background-color:lightblue;
+	color:black;
+	margin-bottom:10px;
+}
+
+.Hotel{
+	color:lightgray;
+}
+.Finder{
+	color:lightblue;
+}
+body{
+background-color:#e6ffff;
+}
+
+.jumbotron{
+	background-color:gray;
+	color:white;
+}
